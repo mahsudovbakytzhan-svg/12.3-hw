@@ -35,67 +35,103 @@ const fetchDataWithError = new Promise((resolve,reject)=>{
 fetchDataWithError .catch(error=>console.error(error))
 
 //6 tapsyrma
+
 async function fetchDataAsync() {
-    let result = await fetchData.then(resolve => {return resolve})
-    console.log(result)
+  try {
+    const result = await fetchData; 
+    console.log(result); 
+  } catch (error) {
+    console.error("Произошла ошибка:", error); 
+  }
 }
-fetchDataAsync()
+
+fetchDataAsync();
+
+
 //7 tapsyrma 
 
-async function fetchDataAsync() {
-  let result = await fetchDataWithError.catch(error=>{return error})
-  console.log(result)
-}
-fetchDataAsync()
-//8 tapsyrma 
-//1. Напишите две асинхронные функции `task1` и `task2`, которые возвращают промисы, разрешающиеся через 1 и 2 секунды соответственно.
-//2. Используйте `async/await` для последовательного выполнения этих задач. Выведите результаты обеих задач в консоль.
-
-const task1_prom = new Promise((resolve, reject)=>{
-  setTimeout (()=>{
-    return resolve("task1:completions")
-  },3000);
-});
-
-function prom(){ return new Promise((resolve, reject)=>{
-  setTimeout (()=>{
-    return resolve("task1:completions")
-  },3000);})}
-
-async function task1(){
-  console.log("task1:start")
-  let result2 = await prom()
-  return result2;
+async function fetchDataAsyncWithError() {
+  try {
+    const result = await fetchDataWithError;
+    console.log(result);
+  } catch (error) {
+    console.error("Произошла ошибка:", error);
+  }
 }
 
-async function getResults(params) {
-  t1res = await task1()
-  console.log(t1res) 
+fetchDataAsyncWithError(); 
+
+
+
+
+
+// 8 tapsyrma
+function task1(){
+  return new Promise((resolve)=>{
+    setTimeout (()=>{
+      resolve("Задача 1 выполнена")
+    },1000)
+  })
 }
 
-getResults()
-
-const task2_prom = new Promise((resolve, reject)=>{
-  setTimeout (()=>{
-    return resolve("task2:completions")
-  },3000);
-});
-
-function prom(){ return new Promise((resolve, reject)=>{
-  setTimeout (()=>{
-    return resolve("task1:completions")
-  },3000);})}
-
-async function task2(){
-  console.log("task2:start")
-  let result2 = await prom()
-  return result2;
+function task2 (){
+  return new Promise((resolve)=>{
+    setTimeout (()=>{
+      resolve("Задача 2 выполнена")
+    },2000)
+  })
 }
 
-async function getResults(params) {
-  t2res = await task2()
-  console.log(t2res) 
+async function runTaks() {
+  try{
+    const result1 = await task1();
+    console.log(result1)
+    const result2 = await taks2 ();
+    console.log (result2)
+  }catch(error){
+   console.error ("Произошла ошибка:", error)
+  }
+  
+}
+runTaks()
+
+//9 tapsyrma 
+function taskA(){
+  return new Promise((resolve)=>{
+    setTimeout (()=>{
+      resolve("Задача A выполнена")
+    },2000)
+  })
 }
 
-getResults()
+function taskB (){
+  return new Promise((resolve)=>{
+    setTimeout (()=>{
+      resolve("Задача B выполнена")
+    },3000)
+  })
+}
 
+async function runParallelTaks() {
+  try{
+    const result3 = await Promise.all ([taskA(),taskB()])
+    console.log(result3[0])
+    console.log(result3[1])
+  }catch(error){
+    console.error("Произошла ошибка:", error)
+  }
+}
+runParallelTaks();
+
+// 10 tapsyrma
+
+
+console.log("Задача B выполнена")
+
+
+async function delayedMessage(delay,message) {
+  setTimeout(()=>{
+    console.log("Задача B выполнена")
+  },200)
+}
+delayedMessage();
